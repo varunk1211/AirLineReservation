@@ -1,32 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
-<body>
-<div>
-    <h2 class="my-4">Dashboard Options</h2>
-    <div class="row">
-        <div class="col-md-4" th:each="option : ${options}">
-            <div class="card text-center mb-3 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${option}">Option</h5>
-                    <a href="#" class="btn btn-primary mt-2">Go</a>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+
+<section>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+    <div class="position-relative text-center py-5"
+         style="background: linear-gradient(to right, #1e3c72, #ffffff); color: white; border-radius: 15px; overflow: hidden;">
+
+        <h1 class="display-4 fw-bold mb-3" style="z-index: 2; position: relative;">Welcome to VBook Airlines</h1>
+        <p class="lead mb-4" style="z-index: 2; position: relative;">
+            Plan your journey, explore destinations, and enjoy seamless travel experiences.
+        </p>
+
+        <!-- Full-width travel-themed background image -->
+        <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1920&q=80"
+             class="img-fluid position-absolute top-0 start-0 w-100 h-100"
+             style="object-fit: cover; opacity: 0.3; z-index: 1;"
+             alt="Travel and booking themed image">
+    </div>
+    <!-- Explore Destinations Section -->
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Explore Destinations</h2>
+        <div class="row g-4">
+            <div class="col-md-4" th:each="dest : ${destinations}">
+                <div class="card h-100 shadow-sm">
+                    <img th:src="${dest.imageUrl}" class="card-img-top" alt="Destination Image" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${dest.name}">Destination Name</h5>
+                        <p class="card-text flex-grow-1" th:text="${dest.description}">Description</p>
+                        <a th:href="@{/flights/search(dest=${dest.id})}" class="btn btn-primary mt-2">Book Now</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <h2 class="my-4">User Details</h2>
-    <table class="table table-striped table-bordered">
-        <tbody>
-        <tr>
-            <th>ID</th>
-            <td th:text="${user.id}"></td>
-        </tr>
-        <tr>
-            <th>Username</th>
-            <td th:text="${user.username}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-</body>
+</section>
 </html>

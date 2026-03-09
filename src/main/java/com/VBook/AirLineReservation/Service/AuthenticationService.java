@@ -20,10 +20,10 @@ public class AuthenticationService implements UserDetailsService {
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            Users user = userRepo.findByUsername(username);
-            if (user == null) {
-                throw new UsernameNotFoundException("User not found with username: " + username);
-            }
+            Users user = userRepo.findByUsername(username)
+                    .orElseThrow(() ->
+                            new UsernameNotFoundException("User not found with username: " + username)
+                    );
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),

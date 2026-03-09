@@ -22,20 +22,21 @@ public class UserService {
     }
 
     public Users findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public String registerUser(Users user) {
-        // Check if username exists
+    public void registerUser(Users user) {
+        // Check if username already exists
         if (userRepository.findByUsername(user.getUsername()) != null) {
-            return "Username already exists!";
+            throw new RuntimeException("Username already exists");
         }
         // Encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // Save user
-        System.out.printf("Registering user: %s with role: %s%n", user.getUsername(), user.getPassword());
+        // Default role
+        user.setRole("USER");
+        System.out.println("Registering user: " + user.getUsername());
         userRepository.save(user);
-        return "User registered successfully";
     }
     public List<Users> getAllUsers() {
         return userRepository.findAll();

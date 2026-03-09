@@ -27,6 +27,7 @@ public class Flight {
     private LocalDateTime arrivalTime;
 
     private double price;
+    private int totalSeats;
     private int availableSeats;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+
+<section class="container mt-5">
+
+    <h2>Book Flight</h2>
+
+    <p><b>Flight:</b> <span th:text="${flight.flightNumber}"></span></p>
+    <p><b>From:</b> <span th:text="${flight.source}"></span></p>
+    <p><b>To:</b> <span th:text="${flight.destination}"></span></p>
+
+    <h3 class="mt-4">Passenger Details</h3>
+
+    <form th:action="@{/book/{id}(id=${flight.id})}" method="post">
+
+        <!-- Passenger container -->
+        <div id="passengerContainer">
+
+            <div class="mb-3 passenger-field">
+
+                <label>Passenger 1</label>
+
+                <input type="text"
+                       name="passengerNames"
+                       class="form-control"
+                       required>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <button type="button"
+                class="btn btn-secondary mb-3"
+                onclick="addPassenger()">
+            + Add Passenger
+        </button>
+
+        <br>
+
+        <button class="btn btn-success">
+            Confirm Booking
+        </button>
+
+    </form>
+
+</section>
+
+<script>
+
+    let passengerCount = 1;
+
+    function addPassenger() {
+
+        passengerCount++;
+
+        const container = document.getElementById("passengerContainer");
+
+        const div = document.createElement("div");
+
+        div.className = "mb-3 passenger-field";
+
+        div.innerHTML = `
+            <label>Passenger ${passengerCount}</label>
+            <input type="text"
+                   name="passengerNames"
+                   class="form-control"
+                   required>
+        `;
+
+        container.appendChild(div);
+    }
+
+</script>
+
+</html>

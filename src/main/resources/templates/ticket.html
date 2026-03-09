@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+
+<section class="container mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <!-- Header -->
+        <div class="card-header bg-dark text-white text-center">
+            <h2>✈ VBook Airlines</h2>
+            <small>Your Journey Starts Here</small>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Left side ticket details -->
+                <div class="col-md-8">
+
+                    <p>
+                        <strong>Booking Reference:</strong>
+                        <span th:text="${booking.bookingReference}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Flight Number:</strong>
+                        <span th:text="${booking.flight.flightNumber}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Route:</strong>
+                        <span th:text="${booking.flight.source}"></span>
+                        →
+                        <span th:text="${booking.flight.destination}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Departure:</strong>
+                        <span th:text="${booking.flight.departureTime}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Arrival:</strong>
+                        <span th:text="${booking.flight.arrivalTime}"></span>
+                    </p>
+
+                    <p>
+                        <strong>Total Paid:</strong>
+                        ₹ <span th:text="${booking.totalAmount}"></span>
+                    </p>
+
+                    <hr>
+
+                    <p><strong>Passengers</strong></p>
+
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            th:each="p : ${booking.passengers}"
+                            th:text="${p.fullName}">
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <!-- QR Code Section -->
+                <div class="col-md-4 text-center">
+
+                    <p><strong>Scan for Ticket</strong></p>
+
+                    <img
+                            th:src="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + ${booking.bookingReference}"
+                            alt="QR Code"
+                            class="img-fluid"/>
+
+                    <p class="mt-3 text-muted">
+                        Show this QR code at boarding
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer text-center">
+
+            <button onclick="window.print()" class="btn btn-primary">
+                Download / Print Ticket
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+</html>
