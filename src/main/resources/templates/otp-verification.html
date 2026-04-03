@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+
+<section class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow p-4">
+                <h3 class="text-center mb-4">Verify OTP</h3>
+                <p class="text-center">An OTP has been sent to your email. Please enter it below to confirm your booking.</p>
+
+                <div th:if="${error}" class="alert alert-danger text-center">
+                    <span th:text="${error}"></span>
+                </div>
+
+                <form th:action="@{/verify-otp}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Enter OTP</label>
+                        <input type="text" name="otp" class="form-control" required maxlength="6">
+                    </div>
+                    <button class="btn btn-success w-100">Verify & Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</html>

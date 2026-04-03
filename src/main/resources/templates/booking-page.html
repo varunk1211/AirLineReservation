@@ -45,7 +45,7 @@
 
     </form>
 
-</section>
+
 
 <script>
 
@@ -67,11 +67,17 @@
                    name="passengerNames"
                    class="form-control"
                    required>
+            <button type="button" class="btn btn-danger btn-sm mt-1" onclick="removePassenger(this)">Remove</button>
         `;
 
         container.appendChild(div);
     }
 
-</script>
+    function removePassenger(button) {
+        const passengerField = button.parentElement;
+        passengerField.remove();
+    }
 
+</script>
+</section>
 </html>

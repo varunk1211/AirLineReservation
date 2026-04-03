@@ -13,16 +13,4 @@ public class UrlControler {
     @Autowired
     BookingRepository bookingRepository;
 
-    @GetMapping("/ticket/{bookingId}")
-    public String viewTicket(@PathVariable Long bookingId,
-                             Model model){
-
-        Booking booking =
-                bookingRepository.findById(bookingId)
-                        .orElseThrow();
-
-        model.addAttribute("booking", booking);
-
-        return "ticket";
-    }
 }

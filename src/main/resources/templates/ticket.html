@@ -63,8 +63,6 @@
                     </ul>
 
                 </div>
-
-
                 <!-- QR Code Section -->
                 <div class="col-md-4 text-center">
 
@@ -79,18 +77,41 @@
                         Show this QR code at boarding
                     </p>
 
+                    <p><strong>Barcode</strong></p>
+
+                    <img
+                            th:src="'https://barcode.tec-it.com/en/Code128?data=' + ${booking.bookingReference} + '&translate-esc=on'"
+                            alt="Barcode"
+                            class="img-fluid"
+                            style="max-width: 200px; height: auto;"/>
+
+                    <p class="mt-3 text-muted">
+                        Barcode for verification
+                    </p>
+
                 </div>
 
             </div>
 
         </div>
 
+        <!-- Terms and Conditions -->
+        <div class="card-body border-top">
+            <h6 class="text-center">Terms and Conditions</h6>
+            <ul class="small">
+                <li>Tickets are non-refundable and non-transferable.</li>
+                <li>Changes to booking must be made 24 hours in advance.</li>
+                <li>VBook Airlines is not responsible for delays due to unforeseen circumstances.</li>
+                <li>Passengers must comply with all airline and airport regulations.</li>
+            </ul>
+        </div>
+
         <!-- Footer -->
         <div class="card-footer text-center">
 
-            <button onclick="window.print()" class="btn btn-primary">
-                Download / Print Ticket
-            </button>
+            <a th:href="@{/download-ticket/{id}(id=${booking.id})}" class="btn btn-primary">
+                Download Ticket as PDF
+            </a>
 
         </div>
 

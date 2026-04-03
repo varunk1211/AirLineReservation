@@ -1,48 +1,187 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Register</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Reservation - Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1504198458649-3128b932f49f?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .register-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            min-width: 400px;
+        }
+        .register-card h3 {
+            color: #003d82;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .register-card .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-group input {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            border-color: #003d82;
+            box-shadow: 0 0 0 3px rgba(0, 61, 130, 0.1);
+            outline: none;
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #003d82 0%, #0056b3 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 61, 130, 0.4);
+        }
+        .alert {
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .login-link a {
+            color: #003d82;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .login-link a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .icon-input {
+            position: relative;
+        }
+    </style>
 </head>
+<body>
+    <div class="register-card">
+        <h3><i class="fas fa-plane-departure"></i> VBook Airlines</h3>
+        <div class="subtitle">Create your account to book flights</div>
 
-<body class="bg-light">
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-
-        <div class="col-md-4">
-            <div class="card shadow p-4">
-
-                <h3 class="text-center mb-4">Register</h3>
-                <div th:if="${error}" class="alert alert-danger text-center">
-                    <span th:text="${error}"></span>
-                </div>
-                <form th:action="@{/register}" method="post">
-
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
-
-                    <button class="btn btn-success w-100">Register</button>
-
-                </form>
-
-                <div class="text-center mt-3">
-                    <a th:href="@{/login}">Already have an account? Login</a>
-                </div>
-
-            </div>
+        <div th:if="${error}" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <span th:text="${error}"></span>
         </div>
 
+        <form th:action="@{/register}" method="post">
+            <div class="form-group icon-input">
+                <label><i class="fas fa-user"></i> Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group icon-input">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-warning w-100" onclick="sendOtp()">
+                    Send OTP
+                </button>
+            </div>
+
+            <div class="form-group" id="otpBlock" style="display:none;">
+                <label>Enter OTP</label>
+                <input type="text" id="otp" class="form-control" placeholder="Enter OTP">
+
+                <button type="button" class="btn btn-info mt-2 w-100" onclick="verifyOtp()">
+                    Verify OTP
+                </button>
+
+                <span id="verifyStatus"></span>
+            </div>
+            <div class="form-group icon-input">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Create a strong password" required>
+            </div>
+
+            <button type="submit" class="btn btn-register w-100 text-white">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a th:href="@{/login}">Login here</a>
+        </div>
     </div>
-</div>
 
 </body>
+<script>
+    function sendOtp() {
+        let email = document.querySelector("input[name='email']").value;
+
+        fetch("/send-otp?email=" + email)
+            .then(res => res.text())
+            .then(() => {
+                document.getElementById("otpBlock").style.display = "block";
+                alert("OTP sent to your email");
+            });
+    }
+
+    function verifyOtp() {
+        let email = document.querySelector("input[name='email']").value;
+        let otp = document.getElementById("otp").value;
+
+        fetch("/verify-otp?email=" + email + "&otp=" + otp)
+            .then(res => res.text())
+            .then(data => {
+                let status = document.getElementById("verifyStatus");
+
+                if (data === "SUCCESS") {
+                    status.innerHTML = "✅ Verified";
+                    status.style.color = "green";
+                } else {
+                    status.innerHTML = "❌ Invalid OTP";
+                    status.style.color = "red";
+                }
+            });
+    }
+</script>
 </html>

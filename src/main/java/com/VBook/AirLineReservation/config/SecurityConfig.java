@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // ✅ correct way in Spring Boot 3 / Spring Security 6
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register","/css/**", "/js/**").permitAll()
+                        .requestMatchers("/login", "/register", "/verify-email","/send-otp" ,"/register-success", "/email-verified", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

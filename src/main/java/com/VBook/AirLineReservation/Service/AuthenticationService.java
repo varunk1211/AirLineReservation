@@ -24,6 +24,12 @@ public class AuthenticationService implements UserDetailsService {
                     .orElseThrow(() ->
                             new UsernameNotFoundException("User not found with username: " + username)
                     );
+
+            // Check if email is verified
+            if (!user.isEmailVerified()) {
+                throw new UsernameNotFoundException("Please verify your email before logging in");
+            }
+
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),

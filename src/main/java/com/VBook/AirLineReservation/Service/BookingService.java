@@ -66,4 +66,12 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
+    public List<Booking> getBookingsByUser(Users user) {
+        return bookingRepository.findByUser(user);
+    }
+
+    public Booking getBookingById(Long id) {
+        return bookingRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
+    }
+
 }

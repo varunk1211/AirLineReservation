@@ -39,5 +39,12 @@ public class FlightService {
     public Flight updateFlight(Flight flight) {
         return flightRepo.save(flight);
     }
+
+    public List<Flight> searchFlights(String source, String destination) {
+        System.out.printf("getting the source and destination in service %s %s \n", source, destination);
+        System.out.printf(flightRepo.searchFlights(source, destination).stream().map(a -> a.getSource() + " " + a.getDestination()).toList().toString());
+        return flightRepo.searchFlights(source, destination);
+    }
+
 }
 

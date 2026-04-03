@@ -18,9 +18,10 @@ public class Users {
     private Long id;
     private String username;
     private String password;
+    private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> bookings;
     private String role;
-
+    private boolean emailVerified = false;
 }
