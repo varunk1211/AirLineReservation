@@ -65,10 +65,8 @@
                                      class="list-group position-absolute w-100"></div>
                             </div>
 
-                            <!-- Destination -->
                             <div class="mb-2 position-relative">
-                                <input type="text" id="destinationInput"
-                                       name="destination"
+                                <input type="text" id="destinationInput" name="destination"
                                        class="form-control"
                                        placeholder="To (e.g. Delhi)" required>
                                 <div id="destinationSuggestions"
@@ -80,13 +78,18 @@
                             </button>
 
                         </form>
-
                     </div>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/my-bookings}">
                         <i class="bi bi-ticket-perforated-fill"></i> My Bookings
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/flights/flights}">
+                        <i class="bi bi-airplane-fill"></i> All Flights
                     </a>
                 </li>
 
