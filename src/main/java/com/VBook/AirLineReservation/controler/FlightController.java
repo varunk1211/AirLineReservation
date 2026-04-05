@@ -33,7 +33,7 @@ public class FlightController {
     @GetMapping("/flights")
     public String viewFlights(Model model) {
 
-        List<Flight> flights = flightService.getAllFlights();
+        List<Flight> flights = flightService.findByDepartureTimeAfter();
 
         model.addAttribute("flights", flights);
 

@@ -24,6 +24,9 @@ public class FlightService {
         return flightRepo.findAll();
     }
 
+    public List<Flight>  findByDepartureTimeAfter() {
+        return flightRepo.findByDepartureTimeAfter(java.time.LocalDateTime.now());
+    }
     // Get Flight By ID
     public Flight getFlightById(Long id) {
         return flightRepo.findById(id)
