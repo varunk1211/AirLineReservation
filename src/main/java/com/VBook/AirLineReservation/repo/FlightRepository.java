@@ -17,5 +17,5 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "f.departureTime >= CURRENT_TIMESTAMP")
     List<Flight> searchFlights(@Param("source") String source,
                                @Param("destination") String destination);
-
+    List<Flight> findByDestinationIgnoreCase(String destination);
 }

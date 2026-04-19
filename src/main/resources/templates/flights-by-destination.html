@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::section})}">
+
+<section>
+
+    <!-- 🔥 Hero Section with Dynamic Background -->
+    <div class="position-relative text-white text-center d-flex align-items-center justify-content-center"
+         style="height: 350px; border-radius: 15px; overflow: hidden;">
+
+        <!-- Background Image -->
+        <img th:src="${data.imageUrl}"
+             class="position-absolute top-0 start-0 w-100 h-100"
+             style="object-fit: cover; opacity: 0.5; z-index: 1;"
+             alt="Destination Image">
+
+        <!-- Content -->
+        <div style="z-index: 2;">
+            <h1 class="fw-bold display-5" th:text="${data.destinationName}">Destination</h1>
+            <p class="lead" th:text="${data.description}">Description</p>
+        </div>
+    </div>
+
+    <!-- ✈️ Flights Section -->
+    <div class="container mt-5">
+
+        <h2 class="text-center mb-4">Available Flights</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4" th:each="flight : ${data.flights}">
+                <div class="card shadow-lg border-0 h-100 hover-shadow">
+
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="card-title fw-bold text-primary"
+                            th:text="${flight.airlineName}">Airline</h5>
+
+                        <p class="mb-1">
+                            <strong>Flight No:</strong>
+                            <span th:text="${flight.flightNumber}"></span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>From:</strong>
+                            <span th:text="${flight.source}"></span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>To:</strong>
+                            <span th:text="${flight.destination}"></span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Departure:</strong>
+                            <span th:text="${#temporals.format(flight.departureTime, 'dd MMM yyyy HH:mm')}"></span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Arrival:</strong>
+                            <span th:text="${#temporals.format(flight.arrivalTime, 'dd MMM yyyy HH:mm')}"></span>
+                        </p>
+
+                        <p class="fw-bold text-success mt-2">
+                            ₹ <span th:text="${flight.price}"></span>
+                        </p>
+
+                        <p class="text-muted">
+                            Seats Left: <span th:text="${flight.availableSeats}"></span>
+                        </p>
+
+                        <a th:href="@{/book/{id}(id=${flight.id})}"
+                           class="btn btn-primary mt-auto">
+                            Book Flight
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ❌ No Flights Case -->
+        <div class="text-center mt-5" th:if="${#lists.isEmpty(data.flights)}">
+            <h4>No flights available for this destination</h4>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ✨ Extra Styling -->
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        transition: 0.3s;
+        box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+    }
+</style>
+
+</html>

@@ -35,7 +35,7 @@ public class DestinationController {
     @PostMapping("/add")
     public String addDestination(@ModelAttribute Destination destination) {
         destinationService.addDestination(destination);
-        return "redirect:/admin/destinations";
+        return "redirect:/dashboard";
     }
 
     // Show edit page
@@ -50,14 +50,14 @@ public class DestinationController {
     @PostMapping("/edit/{id}")
     public String updateDestination(@PathVariable Long id, @ModelAttribute Destination destination) {
         destinationService.updateDestination(id, destination);
-        return "redirect:/admin/destinations";
+        return "redirect:/dashboard";
     }
 
     // Delete destination
     @GetMapping("/delete/{id}")
     public String deleteDestination(@PathVariable Long id) {
         destinationService.deleteDestination(id);
-        return "redirect:/admin/destinations";
+        return "redirect:/dashboard";
     }
 }
 

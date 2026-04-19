@@ -1,8 +1,10 @@
 package com.VBook.AirLineReservation.controler;
 
 import com.VBook.AirLineReservation.Service.FlightService;
+import com.VBook.AirLineReservation.model.DestinationFlightResponse;
 import com.VBook.AirLineReservation.model.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,7 @@ public class FlightController {
 
         flightService.addFlight(flight);
 
-        return "redirect:/admin/flights";
+        return "flights";
     }
 
     @GetMapping("/flights")
@@ -38,5 +40,15 @@ public class FlightController {
         model.addAttribute("flights", flights);
 
         return "flights";
+    }
+
+    @GetMapping("/flights/search")
+    public String getFlightsByDestination(@RequestParam("dest") Long id, Model model) {
+
+        DestinationFlightResponse response = flightService.getFlightsByDestination(id);
+
+        model.addAttribute("data", response);
+
+        return "flights-by-destination";
     }
 }
